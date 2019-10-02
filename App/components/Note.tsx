@@ -6,7 +6,7 @@ export default function Note({ keyval, date, note, deleteNote }) {
     <View key={keyval} style={styles.note}>
       <Text style={styles.noteDate}>{date}</Text>
       <Text style={styles.noteText}>{note}</Text>
-      <TouchableOpacity style={styles.delButton} onPress={deleteNote}>
+      <TouchableOpacity style={styles.delButton} onPress={() => deleteNote(keyval)}>
         <Text style={styles.delText}>-</Text>
       </TouchableOpacity>
     </View>

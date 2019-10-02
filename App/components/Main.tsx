@@ -3,24 +3,51 @@ import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, FlatList, 
 import Note from './Note';
 
 export default function Main() {
-  const [notes, changeNotes] = useState([{ date: `${new Date()}`, note: 'Test Note, Good Note, Yolo Note' }]);
+  let d = new Date();
+  const [notes, changeNotes] = useState([
+    {
+      date: `${d.getFullYear()}/${d.getMonth()}/${d.getDate()}`,
+      note: 'Test Note, Good Note, Yolo Note',
+      key: Math.random()
+    },
+    {
+      date: `${d.getFullYear()}/${d.getMonth()}/${d.getDate()}`,
+      note: 'Test Note, Good Note, Yolo Note',
+      key: Math.random()
+    },
+    {
+      date: `${d.getFullYear()}/${d.getMonth()}/${d.getDate()}`,
+      note: 'Test Note, Good Note, Yolo Note',
+      key: Math.random()
+    },
+    {
+      date: `${d.getFullYear()}/${d.getMonth()}/${d.getDate()}`,
+      note: 'Test Note, Good Note, Yolo Note',
+      key: Math.random()
+    }
+  ]);
   const [noteText, changeNoteText] = useState('');
 
   const addNote = () => {
     if (noteText) {
       let date = new Date();
-      changeNotes([...notes, { date: `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`, note: noteText }]);
+      changeNotes([
+        ...notes,
+        { date: `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`, note: noteText, key: Math.random() }
+      ]);
       changeNoteText('');
     }
   };
 
   const deleteNote = key => {
-    changeNotes(notes.splice(key, 1));
+    changeNotes(notes.filter(note => note.key !== key));
   };
 
-  let renderedNotes = notes.map((val, key) => {
-    return <Note key={key} keyval={key} note={val.note} date={val.date} deleteNote={() => deleteNote(key)} />;
-  });
+  let renderedNotes = notes.map(val => {
+    return (
+      <Note key={val.key} keyval={val.key} note={val.note} date={val.date} deleteNote={() => deleteNote(val.key)} />
+    );
+  }) || <Text>No notes, add some notes to see the magic!</Text>;
 
   return (
     <View style={styles.container}>
